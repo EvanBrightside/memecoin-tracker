@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 100%;
+  background-color: #6868bc; /* перламутровый фон */
+  color: #333;
+}
+
+.title {
+  font-size: 3rem;
+  color: #ffd700; /* золотисто-желтый цвет */
+  margin-bottom: 1.5rem;
+}
+
+.token-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 800px;
+}
+
+.token-card {
+  background-color: #fff0cc; /* светло-желтый фон */
+  border: 2px solid #ffd700;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.token-card:hover {
+  transform: scale(1.05);
+}
+
+.token-card h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.token-card p {
+  color: #666;
+  margin: 0.5rem 0;
+}
