@@ -4,20 +4,27 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-
-# Подключение к базе данных и загрузка данных
+from services.ml_model import train_new_model
 from database import SessionLocal
 from models import Transaction, Token
+from services.twitter_service import fetch_tweets_for_token
+from services.blockchain import analyze_large_wallets
 
 def fetch_training_data():
     db = SessionLocal()
     transactions = db.query(Transaction).all()
     data = []
     for tx in transactions:
+        token_name = tx.token.name
+        tweets = fetch_tweets_for_token(token_name)
+        large_wallet_transactions = analyze_large_wallets(tx.token.token_address)
+        
         data.append({
             "token_id": tx.token_id,
             "amount": tx.amount,
-            "timestamp": tx.timestamp.timestamp()
+            "timestamp": tx.timestamp.timestamp(),
+            "num_tweets": len(tweets),
+            "large_wallet_volume": len(large_wallet_transactions),
         })
     return pd.DataFrame(data)
 

@@ -6,3 +6,7 @@ tensorflow
 solana
 pandas
 scikit-learn
+numpy
+matplotlib
+tweepy
+python-dotenv

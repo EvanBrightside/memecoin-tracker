@@ -1,11 +1,12 @@
 import os
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
 from api import routes
 from services.blockchain import initialize_blockchain_monitor
 from services.ml_model import initialize_ml_model
+from services.coin_initializer import initialize_token_addresses
 
 # Создание таблиц базы данных
 Base.metadata.create_all(bind=engine)
@@ -26,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+initialize_token_addresses()
+initialize_ml_model()
 
 # Dependency для сессии базы данных
 def get_db():
