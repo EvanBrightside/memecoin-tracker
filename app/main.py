@@ -28,8 +28,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-initialize_token_addresses()
-initialize_ml_model()
+# initialize_token_addresses()
+# initialize_ml_model()
 
 # Dependency для сессии базы данных
 def get_db():

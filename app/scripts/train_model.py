@@ -10,6 +10,15 @@ from models import Transaction, Token
 from services.twitter_service import fetch_tweets_for_token
 from services.blockchain import analyze_large_wallets
 
+MODEL_PATH = "models/token_growth_model.pkl"
+
+def train_new_model():
+    os.makedirs("models", exist_ok=True)
+    
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    joblib.dump(model, MODEL_PATH)
+    return model
+
 def fetch_training_data():
     db = SessionLocal()
     transactions = db.query(Transaction).all()
@@ -29,21 +38,21 @@ def fetch_training_data():
     return pd.DataFrame(data)
 
 def train_model():
-    data = fetch_training_data()
+    # data = fetch_training_data()
     
-    X = data[["token_id", "amount", "timestamp"]]
-    y = data["amount"]
+    # X = data[["token_id", "amount", "timestamp"]]
+    # y = data["amount"]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
+    # model = RandomForestRegressor(n_estimators=100, random_state=42)
+    # model.fit(X_train, y_train)
 
-    # Создание каталога "models" при его отсутствии
-    os.makedirs("models", exist_ok=True)
+    # # Создание каталога "models" при его отсутствии
+    # os.makedirs("models", exist_ok=True)
 
-    joblib.dump(model, "models/token_growth_model.pkl")
+    # joblib.dump(model, "models/token_growth_model.pkl")
     print("Модель обучена и сохранена.")
 
-if __name__ == "__main__":
-    train_model()
+# if __name__ == "__main__":
+#     train_model()
